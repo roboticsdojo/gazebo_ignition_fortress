@@ -1,0 +1,26 @@
+# ROS 2 build and install directories
+build/
+install/
+log/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode and IDE files
+.vscode/
+.idea/
+*.swp
+.qodo/
+# Misc
+*.bak
+*.orig
+*.tmp
+.DS_Store
+Thumbs.db
+
+# ROS 2 launch and config generated files
+*.launch.pyc
+*.yamlc 
