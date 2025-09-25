@@ -144,15 +144,15 @@ The system uses Gazebo Ignition for physics simulation and RViz2 for visualizati
 
    ```bash
    # Initialize rosdep (first time only)
-sudo rosdep init
-rosdep update
+   sudo rosdep init
+   rosdep update
 
    # Install package dependencies
-export IGNITION_VERSION=fortress
-cd ~/ros2_workspace/src
-rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
-cd ~/ros2_workspace
-rosdep install --from-paths src -y --ignore-src
+   export IGNITION_VERSION=fortress
+   cd ~/ros2_workspace/src
+   rosdep install -r --from-paths . --ignore-src -- rosdistro $ROS_DISTRO -y
+   cd ~/ros2_workspace
+   rosdep install --from-paths src -y --ignore-src
    ```
 
 4. **Build the Workspace**
