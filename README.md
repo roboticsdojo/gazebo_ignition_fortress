@@ -640,6 +640,7 @@ Gazebo Ignition includes built-in video recording capabilities that can capture 
 #### Recording a Simulation Session
 
 1. **Start Simulation**:
+
    ```bash
    ros2 launch ppp_bot launch_sim.launch.py
    ```
