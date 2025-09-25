@@ -165,9 +165,9 @@ The system uses Gazebo Ignition for physics simulation and RViz2 for visualizati
 
    ```bash
    # If you encounter controller_manager related errors
-sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
-colcon build
-```
+   sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
+   colcon build
+   ```
 
 6. **Source the Workspace**
 
