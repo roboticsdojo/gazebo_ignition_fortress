@@ -78,12 +78,14 @@ The system uses Gazebo Ignition for physics simulation and RViz2 for visualizati
 1. **Install Gazebo Fortress**
 
    **Step 1: Install Necessary Tools**
-   ```bash
+
+```bash
    sudo apt-get update
    sudo apt-get install lsb-release gnupg
-   ```
+```
 
    **Step 2: Add Ignition Gazebo Repository**
+
    ```bash
    sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
@@ -91,6 +93,7 @@ The system uses Gazebo Ignition for physics simulation and RViz2 for visualizati
    ```
 
    **Step 3: Install Ignition Fortress**
+
    ```bash
    sudo apt-get install ignition-fortress
    ```
@@ -131,40 +134,43 @@ The system uses Gazebo Ignition for physics simulation and RViz2 for visualizati
    ```
 
 3. **Create ROS2 Workspace**
+
    ```bash
    mkdir -p ~/ros2_workspace/src
    cd ~/ros2_workspace/src
    ```
 
-
-
 3. **Install Dependencies**
+
    ```bash
    # Initialize rosdep (first time only)
-sudo rosdep init
-rosdep update
+   sudo rosdep init
+   rosdep update
 
    # Install package dependencies
-export IGNITION_VERSION=fortress
-cd ~/ros2_workspace/src
-rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
-cd ~/ros2_workspace
-rosdep install --from-paths src -y --ignore-src
+   export IGNITION_VERSION=fortress
+   cd ~/ros2_workspace/src
+   rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+   cd ~/ros2_workspace
+   rosdep install --from-paths src -y --ignore-src
    ```
 
 4. **Build the Workspace**
+
    ```bash
-colcon build
-```
+    colcon build
+   ```
 
 5. **Handle Controller Manager Error (if needed)**
+
    ```bash
    # If you encounter controller_manager related errors
-sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
-colcon build
-```
+   sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
+   colcon build
+   ```
 
 6. **Source the Workspace**
+
    ```bash
    source ~/ros2_workspace/install/local_setup.bash
    ```
@@ -324,6 +330,7 @@ The project includes four different simulation environments:
 
 ### World Selection
 Worlds can be selected using the `world_name` parameter:
+
 ```bash
 ros2 launch ppp_bot launch_sim.launch.py world_name:=cones
 ros2 launch ppp_bot launch_sim.launch.py world_name:=room
@@ -345,6 +352,7 @@ ros2 launch ppp_bot launch_sim.launch.py world_name:=maze
 - `localization`: Enable localization mode (default: false)
 
 **Usage**:
+
 ```bash
 # Basic simulation
 ros2 launch ppp_bot launch_sim.launch.py
@@ -374,6 +382,7 @@ ros2 launch ppp_bot launch_sim.launch.py world_name:=cones localization:=true
 - Lifecycle manager
 
 **Usage**:
+
 ```bash
 ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
 ```
@@ -418,6 +427,7 @@ ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
 #### `config/my_controllers.yaml`
 **Purpose**: ROS2 control configuration for the robot
 **Key Parameters**:
+
 ```yaml
 diff_drive_base_controller:
   wheel_separation: 0.35
@@ -431,6 +441,7 @@ diff_drive_base_controller:
 #### `config/mapper_params_online_async.yaml`
 **Purpose**: slam_toolbox parameters for SLAM
 **Key Parameters**:
+
 ```yaml
 slam_toolbox:
   resolution: 0.05          # Map resolution (5cm)
@@ -452,6 +463,7 @@ slam_toolbox:
 - **Behaviors**: Recovery behaviors
 
 **Key Parameters**:
+
 ```yaml
 controller_server:
   controller_frequency: 20.0 Hz
@@ -500,6 +512,7 @@ global_costmap:
 ### Basic SLAM Operation
 
 1. **Start Simulation**:
+
    ```bash
    source ~/ros2_workspace/install/local_setup.bash
    ros2 launch ppp_bot launch_sim.launch.py
@@ -515,6 +528,7 @@ global_costmap:
    - Occupancy grid builds in real-time
 
 4. **Save the Map** (optional):
+
    ```bash
    ros2 run nav2_map_server map_saver_cli -f ~/my_map
    ```
@@ -522,10 +536,11 @@ global_costmap:
 ### Navigation Operation
 
 1. **Start Navigation** (in new terminal):
+
    ```bash
-source ~/ros2_workspace/install/local_setup.bash
-ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
-```
+   source ~/ros2_workspace/install/local_setup.bash
+   ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
+   ```
 
 2. **Set Initial Pose**:
    - In RViz2, click "2D Pose Estimate"
@@ -542,6 +557,7 @@ ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
 ### Localization Mode
 
 1. **Start Localization**:
+
    ```bash
    ros2 launch ppp_bot launch_sim.launch.py world_name:=cones localization:=true
    ```
@@ -557,6 +573,7 @@ ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
 ### Advanced Usage
 
 #### Custom World Testing
+
 ```bash
 # Test in different environments
 ros2 launch ppp_bot launch_sim.launch.py world_name:=maze
@@ -564,6 +581,7 @@ ros2 launch ppp_bot launch_sim.launch.py world_name:=room_with_cones
 ```
 
 #### Performance Monitoring
+
 ```bash
 # Monitor system performance
 ros2 topic echo /scan
@@ -572,6 +590,7 @@ ros2 topic echo /cmd_vel
 ```
 
 #### Parameter Tuning
+
 ```bash
 # Modify SLAM parameters
 ros2 param set /slam_toolbox resolution 0.025
@@ -583,6 +602,7 @@ ros2 param set /slam_toolbox map_update_interval 2.0
 The robot can be controlled in real-time using teleoperation while the simulation is running. This allows for interactive exploration and testing of the SLAM system.
 
 #### Keyboard Teleoperation
+
 ```bash
 # Start simulation with keyboard teleop
 ros2 launch ppp_bot launch_sim.launch.py use_teleop:=true use_joystick:=false
@@ -596,6 +616,7 @@ ros2 launch ppp_bot launch_sim.launch.py use_teleop:=true use_joystick:=false
 - `k` - Stop
 
 #### Joystick Teleoperation
+
 ```bash
 # Start simulation with joystick teleop
 ros2 launch ppp_bot launch_sim.launch.py use_teleop:=true use_joystick:=true
@@ -619,6 +640,7 @@ Gazebo Ignition includes built-in video recording capabilities that can capture 
 #### Recording a Simulation Session
 
 1. **Start Simulation**:
+
    ```bash
    ros2 launch ppp_bot launch_sim.launch.py
    ```
@@ -652,6 +674,7 @@ The SLAM system generates detailed occupancy grid maps that can be saved and reu
 #### Map Generation Process
 
 1. **Start SLAM**:
+
    ```bash
    ros2 launch ppp_bot launch_sim.launch.py world_name:=cones
    ```
@@ -662,6 +685,7 @@ The SLAM system generates detailed occupancy grid maps that can be saved and reu
    - Watch the map develop in RViz2
 
 3. **Save the Map**:
+
    ```bash
    # Save current map
    ros2 run nav2_map_server map_saver_cli -f ~/my_generated_map
@@ -689,17 +713,20 @@ When you save a map, the following files are created:
 #### Using Generated Maps
 
 1. **For Localization**:
+
    ```bash
    ros2 launch ppp_bot launch_sim.launch.py world_name:=cones localization:=true
    ```
 
 2. **For Navigation**:
+
    ```bash
    # Start navigation with your map
    ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
    ```
 
 3. **Map Analysis**:
+
    ```bash
    # View map statistics
    ros2 run nav2_map_server map_server --ros-args -p yaml_filename:=/path/to/your/map.yaml
@@ -768,6 +795,7 @@ This video showcases Gazebo's built-in video recording feature:
 #### 2. Controller Manager Errors
 **Symptoms**: Build fails with controller_manager errors
 **Solution**:
+
 ```bash
 sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
 colcon build
@@ -797,6 +825,7 @@ colcon build
 ### Debugging Commands
 
 #### System Status
+
 ```bash
 # Check running nodes
 ros2 node list
@@ -812,6 +841,7 @@ ros2 param list
 ```
 
 #### Sensor Data
+
 ```bash
 # Monitor LiDAR data
 ros2 topic echo /scan --once
@@ -824,6 +854,7 @@ ros2 topic echo /odom --once
 ```
 
 #### Transform Debugging
+
 ```bash
 # View transform tree
 ros2 run tf2_tools view_frames
@@ -849,6 +880,7 @@ ros2 run tf2_ros tf2_echo base_link lidar_frame
 ### Adding New Sensors
 
 1. **Create Sensor XACRO File**:
+
    ```xml
    <!-- sensors/new_sensor.xacro -->
    <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
@@ -869,12 +901,14 @@ ros2 run tf2_ros tf2_echo base_link lidar_frame
    ```
 
 2. **Include in Main URDF**:
+
    ```xml
    <!-- robot.urdf.xacro -->
    <xacro:include filename="new_sensor.xacro" />
    ```
 
 3. **Add Parameter Bridge**:
+
    ```python
    # launch_ign.launch.py
    args = [
@@ -889,6 +923,7 @@ ros2 run tf2_ros tf2_echo base_link lidar_frame
    - Save as `.sdf` file in `worlds/` directory
 
 2. **Add World to Launch**:
+
    ```python
    # launch_sim.launch.py
    world_name_launch_arg = DeclareLaunchArgument(
