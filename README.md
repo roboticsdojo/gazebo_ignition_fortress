@@ -538,8 +538,8 @@ global_costmap:
 1. **Start Navigation** (in new terminal):
 
    ```bash
-source ~/ros2_workspace/install/local_setup.bash
-ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
+   source ~/ros2_workspace/install/local_setup.bash
+   ros2 launch ppp_bot navigation.launch.py use_sim_time:=true
    ```
 
 2. **Set Initial Pose**:
