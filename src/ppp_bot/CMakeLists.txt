@@ -27,8 +27,13 @@ endif()
 
 # Install launch files.
 install(DIRECTORY
-  description launch worlds config models maps
+  description launch worlds config models
   DESTINATION share/${PROJECT_NAME}/
+)
+# Install map files
+install(
+    DIRECTORY maps/
+    DESTINATION share/${PROJECT_NAME}/maps
 )
 
 ament_package()
